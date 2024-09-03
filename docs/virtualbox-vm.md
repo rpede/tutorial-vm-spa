@@ -14,11 +14,12 @@ Start VirtualBox.
 Click "New" button.
 Select the `.iso` file you just downloaded in the "ISO Image" field.
 And check "Skip Unattended Installation".
+Then "Next" through the rest of the steps.
 
 ![Create VM from Ubuntu ISO](./vb-create-vm.png)
 
-When are done with the wizard a new window will pop up with the screen of the
-VM.
+When you're done with the wizard a new window will pop up with the screen of
+the VM.
 At this point you need to open the Settings dialog and change the network
 adapter to bridged.
 
