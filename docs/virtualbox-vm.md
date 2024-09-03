@@ -28,19 +28,24 @@ adapter to bridged.
 Using bridged network adapter allows you to connect to ports on the VM from
 your host OS.
 
-Now in the window with the VM screen.
-Select your keyboard layout of choice.
+Click "Start" to start the VM.
+Wait until it is booted.
 
-Then type a username and password that you can remember.
-Accept the defaults until you get to the "SSH configuration" screen.
-Here you want to check [x] "Install OpenSSH server".
+1. Select "English" as language
+2. Pick whatever keyboard layout you are accustomed to.
+3. Choose "Ubuntu Server" as installation type.
+4. Defaults for Network, Proxy, Mirror and Storage configuration.
+5. For Profile configuration, type a username and password you can remember and give it a hostname.
+6. Skip "Upgrade to Ubuntu Pro"
+7. Check [x] to "Install OpenSSH server"
 
 ![Install OpenSSH server](./vb-ssh-config.png)
 
-Keep accepting the defaults until "Installation complete!", then "Reboot Now".
+8. Don't select any "Featured server snaps"
+9. Wait until it says "Installation complete!", then "Reboot Now".
+10. After reboot, login with your credentials.
+11. Take note of the IPv4 address shown, since you'll need it for later.
 
-After reboot, you can login with your credentials.
-Take note of the IPv4 address shown, since you'll need it for later.
 Congrats! You now got yourself a VM running Ubuntu Server.
 
 Navigate back to the main guide and continue.

@@ -109,10 +109,10 @@ For this tutorial, we will go with HTTP.
 I have already prepared a demo application that you can find a download link
 for [here](https://github.com/rpede/tutorial-vm-spa/releases).
 
-Copy the URL for `release.zip` and run:
+To download it to the VM, run:
 
 ```sh
-wget "replace this string with url for the zip file"
+wget "https://github.com/rpede/tutorial-vm-spa/releases/download/1.0.0/release.zip"
 ```
 
 On Linux, [gzip](https://en.wikipedia.org/wiki/Gzip) compressed
@@ -166,7 +166,7 @@ This JavaScript is the code for the SPA.
 When you click the button it will change the content that is rendered without
 touching the web-server.
 Then when you hit "reload", since the address now is `/about`, it will make
-a request to the server for a `about` / `about.html` page.
+a request to the server for a `about` (or `about.html`) page.
 Remember, we only have a `index.html`.
 There is no `/about` page on the server, so it will respond with generic 404
 page.
