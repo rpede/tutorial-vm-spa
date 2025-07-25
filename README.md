@@ -35,25 +35,95 @@ provider of your choosing.
 
 The guide is based on Ubuntu Server 24.04 LTS.
 
-Guides for creating a VM:
+Guides for creating a Ubuntu Server VM:
 
-- [Create an Ubuntu VM with VirtualBox (or UTM)](./docs/virtualbox-vm.md)
-- [Create an Ubuntu VM on Google Cloud](./docs/google-cloud-vm.md).
+- [For Windows using VirtualBox](./docs/virtualbox-vm.md)
+- [For Mac using UTM](./docs/utm-vm.md)
+- [In the cloud using Google Cloud](./docs/google-cloud-vm.md).
 
 **IMPORTANT: If using a cloud provider you will need to clean up all created
 resources when done. Otherwise, you could end up spending all your initial
 free-credit or worst case have reoccurring charges.**
 
-## Setup nginx
+## Connecting over SSH
 
-All commands from here on are executed on the server.
-Typically, you would use [SSH](https://en.wikipedia.org/wiki/Secure_Shell) to
+All commands from here on are executed in a terminal on the server, unless otherwise stated.
+Typically, you would use [Secure Shell (SSH)](https://en.wikipedia.org/wiki/Secure_Shell) to
 access a shell on a remote server over an encrypted (secure) connection.
 
-Most cloud providers provide a way to get a shell on a VM with just a single
-button click.
+To connect to the server via SSH, open a terminal on your own computer then type:
 
-Find some way to get a console on your VM.
+```sh
+ssh <user>@<server_ip>
+```
+
+Where `<server_ip>` is the IP you noted down on the server and `<user>` is your
+username.
+Example:
+
+```sh
+ssh user@192.168.64.3
+```
+
+First time you connect, it will show you a warning like this:
+
+```
+The authenticity of host '192.168.64.3 (192.168.64.3)' can't be established.
+ED25519 key fingerprint is SHA256:27E3jOhvwDSNtgIHzWPjRssQcoMZ9A4oCW43Pg/5iYg.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? 
+```
+
+Type `yes` and hit enter/return to continue.
+Then enter your password.
+You should now see a prompt similar to this:
+
+```
+Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-64-generic aarch64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Fri Jul 25 06:59:25 PM UTC 2025
+
+  System load:             0.0
+  Usage of /:              44.8% of 9.75GB
+  Memory usage:            9%
+  Swap usage:              0%
+  Processes:               122
+  Users logged in:         1
+  IPv4 address for enp0s1: 192.168.64.3
+  IPv6 address for enp0s1: fd7a:6e6e:e38f:29aa:587a:d7ff:fe6c:c42b
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+81 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Fri Jul 25 18:56:39 2025 from 192.168.64.1
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+user@server:~$
+```
+
+_Some of the details will be different._
+
+Since it is showing us that updates are available we might as well start by
+installing those.
+
+```sh
+sudo apt update && sudo apt -y upgrade
+```
+
+## Setup nginx
+
 Then let's get started!
 
 First we need a web-server.
@@ -144,6 +214,7 @@ Notice the only HTML file in the folder is `index.html`.
 
 Load the site in your browser by typing your VMs external IP into your address
 bar.
+It should look like this:
 
 ![Demo app](./docs/demo-app.png)
 
@@ -241,13 +312,15 @@ status nginx`.
 Try the page again.
 Test it in the same way you did earlier.
 
-![Reload still shows about page](./docs/demo-app-about.png)
+![Reload still shows the about page](./docs/demo-app-about.png)
 
 Reloading or navigating directly to a sub-page should work now.
 
 ## Closing thoughts
 
-Instead of Nginx, we could also have used Apache, Lighttpd or something else.
+Instead of Nginx as web server, we could also have used
+[Apache](https://en.wikipedia.org/wiki/Apache_HTTP_Server) or
+[lighttpd](https://en.wikipedia.org/wiki/Lighttpd).
 They all have many features in addition to just serving static files.
 Such as:
 
@@ -257,10 +330,13 @@ Such as:
 - [Execute CGI scripts](https://en.wikipedia.org/wiki/Common_Gateway_Interface)
 - [Forwarding](https://en.wikipedia.org/wiki/Proxy_server#Web_proxy_servers)
 
-A common use-case for Nginx is as an entry point for internet traffic.
-Depending on requested path it can, either serve files for front-end directly from disk, or forward to one or more back-ends.
-All while managing things like encryption, compression and caching.
-The HTTP-server of your back-end framework can also be configured to do these things, but Nginx (and others like it) will often perform better for those tasks.
-It will also take some load of your back-end.
+A common use-case for Nginx is as a single entry point (aka gateway) for one or
+more web applications.
+Either serve files directly from disk for front-end, or forward requests to one
+or more back-ends.
+All while taking care of things like encryption, compression and caching.
+The HTTP-server of your back-end framework can also be configured to do these
+things, but Nginx perform a lot better for those tasks.
+Plus it will also take some load of your back-end.
 
 ![Common use-case for Nginx](./docs/nginx-usecase.drawio.png)
